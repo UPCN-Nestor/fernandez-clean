@@ -1,0 +1,86 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="factura">
+            <h2><span jhiTranslate="ofVApp.factura.detail.title">Factura</span> {{ factura.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="ofVApp.factura.suministro">Suministro</span></dt>
+                <dd>
+                    <span>{{ factura.suministro }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.factura.usuario">Usuario</span></dt>
+                <dd>
+                    <span>{{ factura.usuario }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.factura.inmueble">Inmueble</span></dt>
+                <dd>
+                    <span>{{ factura.inmueble }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.factura.periodo">Periodo</span></dt>
+                <dd>
+                    <span>{{ factura.periodo }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.factura.numero">Numero</span></dt>
+                <dd>
+                    <span>{{ factura.numero }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.factura.vencimiento1">Vencimiento 1</span></dt>
+                <dd>
+                    <span>{{ factura.vencimiento1 }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.factura.vencimiento2">Vencimiento 2</span></dt>
+                <dd>
+                    <span>{{ factura.vencimiento2 }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.factura.importe1">Importe 1</span></dt>
+                <dd>
+                    <span>{{ factura.importe1 }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.factura.importe2">Importe 2</span></dt>
+                <dd>
+                    <span>{{ factura.importe2 }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.factura.servicio">Servicio</span></dt>
+                <dd>
+                    <span>{{ factura.servicio }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.factura.tarifa">Tarifa</span></dt>
+                <dd>
+                    <span>{{ factura.tarifa }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.factura.archivopdf">Archivopdf</span></dt>
+                <dd>
+                    <span>{{ factura.archivopdf }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.factura.estado">Estado</span></dt>
+                <dd>
+                    <span>{{ factura.estado }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.factura.dni">Dni</span></dt>
+                <dd>
+                    <span>{{ factura.dni }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.factura.socio">Socio</span></dt>
+                <dd>
+                    <span>{{ factura.socio }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/factura', factura.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

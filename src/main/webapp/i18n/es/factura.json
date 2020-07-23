@@ -1,0 +1,36 @@
+{
+  "ofVApp": {
+    "factura": {
+      "home": {
+        "title": "Facturas",
+        "createLabel": "Crear nuevo Factura",
+        "createOrEditLabel": "Crear o editar Factura",
+        "notFound": "Ningún Facturas encontrado"
+      },
+      "created": "Un nuevo Factura ha sido creado con el identificador {{ param }}",
+      "updated": "Un Factura ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Factura ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Factura {{ id }}?"
+      },
+      "detail": {
+        "title": "Factura"
+      },
+      "suministro": "Suministro",
+      "usuario": "Usuario",
+      "inmueble": "Inmueble",
+      "periodo": "Periodo",
+      "numero": "Numero",
+      "vencimiento1": "Vencimiento 1",
+      "vencimiento2": "Vencimiento 2",
+      "importe1": "Importe 1",
+      "importe2": "Importe 2",
+      "servicio": "Servicio",
+      "tarifa": "Tarifa",
+      "archivopdf": "Archivopdf",
+      "estado": "Estado",
+      "dni": "Dni",
+      "socio": "Socio"
+    }
+  }
+}

@@ -1,0 +1,124 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-factura-heading" jhiTranslate="ofVApp.factura.home.createOrEditLabel">Create or edit a Factura</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.suministro" for="field_suministro">Suministro</label>
+                    <input type="text" class="form-control" name="suministro" id="field_suministro"
+                           formControlName="suministro"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.usuario" for="field_usuario">Usuario</label>
+                    <input type="text" class="form-control" name="usuario" id="field_usuario"
+                           formControlName="usuario"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.inmueble" for="field_inmueble">Inmueble</label>
+                    <input type="text" class="form-control" name="inmueble" id="field_inmueble"
+                           formControlName="inmueble"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.periodo" for="field_periodo">Periodo</label>
+                    <input type="text" class="form-control" name="periodo" id="field_periodo"
+                           formControlName="periodo"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.numero" for="field_numero">Numero</label>
+                    <input type="text" class="form-control" name="numero" id="field_numero"
+                           formControlName="numero"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.vencimiento1" for="field_vencimiento1">Vencimiento 1</label>
+                    <div class="input-group">
+                        <input id="field_vencimiento1" type="text" class="form-control" name="vencimiento1" ngbDatepicker #vencimiento1Dp="ngbDatepicker" formControlName="vencimiento1"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="vencimiento1Dp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.vencimiento2" for="field_vencimiento2">Vencimiento 2</label>
+                    <div class="input-group">
+                        <input id="field_vencimiento2" type="text" class="form-control" name="vencimiento2" ngbDatepicker #vencimiento2Dp="ngbDatepicker" formControlName="vencimiento2"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="vencimiento2Dp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.importe1" for="field_importe1">Importe 1</label>
+                    <input type="number" class="form-control" name="importe1" id="field_importe1"
+                           formControlName="importe1"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.importe2" for="field_importe2">Importe 2</label>
+                    <input type="number" class="form-control" name="importe2" id="field_importe2"
+                           formControlName="importe2"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.servicio" for="field_servicio">Servicio</label>
+                    <input type="text" class="form-control" name="servicio" id="field_servicio"
+                           formControlName="servicio"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.tarifa" for="field_tarifa">Tarifa</label>
+                    <input type="text" class="form-control" name="tarifa" id="field_tarifa"
+                           formControlName="tarifa"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.archivopdf" for="field_archivopdf">Archivopdf</label>
+                    <input type="text" class="form-control" name="archivopdf" id="field_archivopdf"
+                           formControlName="archivopdf"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.estado" for="field_estado">Estado</label>
+                    <input type="text" class="form-control" name="estado" id="field_estado"
+                           formControlName="estado"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.dni" for="field_dni">Dni</label>
+                    <input type="text" class="form-control" name="dni" id="field_dni"
+                           formControlName="dni"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.socio" for="field_socio">Socio</label>
+                    <input type="text" class="form-control" name="socio" id="field_socio"
+                           formControlName="socio"/>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

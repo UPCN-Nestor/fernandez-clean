@@ -1,0 +1,76 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "suministro",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "usuario",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "inmueble",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "periodo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "numero",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "vencimiento1",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "vencimiento2",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "importe1",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "importe2",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "servicio",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "tarifa",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "archivopdf",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "estado",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dni",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "socio",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20200625145038",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "factura",
+    "databaseType": "sql",
+    "readOnly": false,
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}
