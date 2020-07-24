@@ -74,7 +74,14 @@ Generic styles
 }
 
 .footer {
+  background-color: #1b2024;
+  color: #ffffff;
+  text-align: center;
   border-top: 1px solid rgba(0, 0, 0, 0.125);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
 }
 
 .hand,

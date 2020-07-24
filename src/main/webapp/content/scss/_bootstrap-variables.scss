@@ -4,3 +4,27 @@
 * https://github.com/twbs/bootstrap/blob/v4-dev/scss/_variables.scss can be overwritten here
 * Make sure not to add !default to values here
 */
+
+$theme-colors: (
+  'primary': #96cd01,
+  'warning': #aaaa00,
+  'info': #4e86c1,
+  'dark': #0000ff,
+  'secondary': #0000ff,
+  'danger': #ff4136
+);
+
+$font-family-sans-serif: 'Maven Pro', sans-serif;
+
+.bg-primary {
+  border-color: #76ac00;
+}
+
+.btn-primary {
+  border-color: #76ac00;
+}
+
+.alert-warning {
+  background-color: #aaaa00;
+  border-color: #aaaa00;
+}
