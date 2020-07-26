@@ -1,0 +1,56 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="suministro">
+            <h2><span jhiTranslate="ofVApp.suministro.detail.title">Suministro</span> {{ suministro.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="ofVApp.suministro.suministro">Suministro</span></dt>
+                <dd>
+                    <span>{{ suministro.suministro }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.suministro.servicio">Servicio</span></dt>
+                <dd>
+                    <span>{{ suministro.servicio }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.suministro.inmueble">Inmueble</span></dt>
+                <dd>
+                    <span>{{ suministro.inmueble }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.suministro.usuario">Usuario</span></dt>
+                <dd>
+                    <span>{{ suministro.usuario }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.suministro.dni">Dni</span></dt>
+                <dd>
+                    <span>{{ suministro.dni }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.suministro.tarifa">Tarifa</span></dt>
+                <dd>
+                    <span>{{ suministro.tarifa }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.suministro.user">User</span></dt>
+                <dd>
+                    <span *ngFor="let user of suministro.users; let last = last">
+                        {{ user.login }}{{ last ? '' : ', ' }}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/suministro', suministro.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

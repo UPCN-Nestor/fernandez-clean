@@ -68,6 +68,12 @@
                 <dd>
                     <span>{{ factura.socio }}</span>
                 </dd>
+                <dt><span jhiTranslate="ofVApp.factura.archivoFacturas">Archivo Facturas</span></dt>
+                <dd>
+                    <div *ngIf="factura.archivoFacturas">
+                        <a [routerLink]="['/archivo-facturas', factura.archivoFacturas?.id, 'view']">{{ factura.archivoFacturas?.nombre }}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

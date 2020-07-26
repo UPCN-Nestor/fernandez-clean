@@ -1,0 +1,28 @@
+{
+  "ofVApp": {
+    "suministro": {
+      "home": {
+        "title": "Suministros",
+        "createLabel": "Crear nuevo Suministro",
+        "createOrEditLabel": "Crear o editar Suministro",
+        "notFound": "Ningún Suministros encontrado"
+      },
+      "created": "Un nuevo Suministro ha sido creado con el identificador {{ param }}",
+      "updated": "Un Suministro ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Suministro ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Suministro {{ id }}?"
+      },
+      "detail": {
+        "title": "Suministro"
+      },
+      "suministro": "Suministro",
+      "servicio": "Servicio",
+      "inmueble": "Inmueble",
+      "usuario": "Usuario",
+      "dni": "Dni",
+      "tarifa": "Tarifa",
+      "user": "User"
+    }
+  }
+}

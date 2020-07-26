@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="archivoFacturas">
+            <h2><span jhiTranslate="ofVApp.archivoFacturas.detail.title">Archivo Facturas</span> {{ archivoFacturas.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="ofVApp.archivoFacturas.nombre">Nombre</span></dt>
+                <dd>
+                    <span>{{ archivoFacturas.nombre }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.archivoFacturas.fecha">Fecha</span></dt>
+                <dd>
+                    <span>{{ archivoFacturas.fecha }}</span>
+                </dd>
+                <dt><span jhiTranslate="ofVApp.archivoFacturas.archivoBlob">Archivo Blob</span></dt>
+                <dd>
+                    <div *ngIf="archivoFacturas.archivoBlob">
+                        <a (click)="openFile(archivoFacturas?.archivoBlobContentType!, archivoFacturas?.archivoBlob)" jhiTranslate="entity.action.open">open</a>
+                        {{ archivoFacturas.archivoBlobContentType }}, {{ byteSize(archivoFacturas.archivoBlob) }}
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/archivo-facturas', archivoFacturas.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-archivo-facturas-heading">Cargar nuevo archivo ZIP de facturas</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+<!--
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.archivoFacturas.nombre" for="field_nombre">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" id="field_nombre"
+                           formControlName="nombre"/>
+                </div>
+                
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.archivoFacturas.fecha" for="field_fecha">Fecha</label>
+                    <div class="input-group">
+                        <input id="field_fecha" type="text" class="form-control" name="fecha" ngbDatepicker #fechaDp="ngbDatepicker" formControlName="fecha"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="fechaDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+-->
+                <div class="form-group">
+                    <label class="form-control-label" for="field_archivoBlob">Seleccione archivo ZIP</label>
+                    <div>
+                        <div *ngIf="editForm.get('archivoBlob')!.value" class="form-text text-danger clearfix">
+                            <a class="pull-left" (click)="openFile(editForm.get('archivoBlobContentType')!.value, editForm.get('archivoBlob')!.value)" jhiTranslate="entity.action.open">open</a><br>
+                            <span class="pull-left">{{ editForm.get('archivoBlobContentType')!.value }}, {{ byteSize(editForm.get('archivoBlob')!.value) }}</span>
+                            <button type="button" (click)="editForm.patchValue({archivoBlob: null});editForm.patchValue({archivoBlobContentType: null});"
+                                    class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon icon="times"></fa-icon>
+                            </button>
+                        </div>
+                        <input #file type="file" id="file_archivoBlob" (change)="setFileData($event, 'archivoBlob', false)" jhiTranslate="entity.action.addblob"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="archivoBlob" id="field_archivoBlob"
+                           formControlName="archivoBlob"/>
+                    <input type="hidden" class="form-control" name="archivoBlobContentType" id="field_archivoBlobContentType"
+                           formControlName="archivoBlobContentType" />
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

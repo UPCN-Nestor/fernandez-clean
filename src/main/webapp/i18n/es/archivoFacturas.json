@@ -1,0 +1,24 @@
+{
+  "ofVApp": {
+    "archivoFacturas": {
+      "home": {
+        "title": "Archivo Facturas",
+        "createLabel": "Crear nuevo Archivo Facturas",
+        "createOrEditLabel": "Crear o editar Archivo Facturas",
+        "notFound": "Ningún Archivo Facturas encontrado"
+      },
+      "created": "Un nuevo Archivo Facturas ha sido creado con el identificador {{ param }}",
+      "updated": "Un Archivo Facturas ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Archivo Facturas ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Archivo Facturas {{ id }}?"
+      },
+      "detail": {
+        "title": "Archivo Facturas"
+      },
+      "nombre": "Nombre",
+      "fecha": "Fecha",
+      "archivoBlob": "Archivo Blob"
+    }
+  }
+}

@@ -1,0 +1,95 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="ofVApp.factura.home.title">Facturas</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-factura" [routerLink]="['/factura/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="ofVApp.factura.home.createLabel">
+            Create a new Factura
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="facturas?.length === 0">
+        <span jhiTranslate="ofVApp.factura.home.notFound">No facturas found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="facturas?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.suministro">Suministro</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.usuario">Usuario</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.inmueble">Inmueble</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.periodo">Periodo</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.numero">Numero</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.vencimiento1">Vencimiento 1</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.vencimiento2">Vencimiento 2</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.importe1">Importe 1</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.importe2">Importe 2</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.servicio">Servicio</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.tarifa">Tarifa</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.archivopdf">Archivopdf</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.estado">Estado</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.dni">Dni</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.socio">Socio</span></th>
+                    <th scope="col" ><span jhiTranslate="ofVApp.factura.archivoFacturas">Archivo Facturas</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let factura of facturas ;trackBy: trackId">
+                    <td><a [routerLink]="['/factura', factura.id, 'view']">{{ factura.id }}</a></td>
+                    <td>{{ factura.suministro }}</td>
+                    <td>{{ factura.usuario }}</td>
+                    <td>{{ factura.inmueble }}</td>
+                    <td>{{ factura.periodo }}</td>
+                    <td>{{ factura.numero }}</td>
+                    <td>{{ factura.vencimiento1 | date:'mediumDate' }}</td>
+                    <td>{{ factura.vencimiento2 | date:'mediumDate' }}</td>
+                    <td>{{ factura.importe1 }}</td>
+                    <td>{{ factura.importe2 }}</td>
+                    <td>{{ factura.servicio }}</td>
+                    <td>{{ factura.tarifa }}</td>
+                    <td>{{ factura.archivopdf }}</td>
+                    <td>{{ factura.estado }}</td>
+                    <td>{{ factura.dni }}</td>
+                    <td>{{ factura.socio }}</td>
+                    <td>
+                        <div *ngIf="factura.archivoFacturas">
+                            <a [routerLink]="['/archivo-facturas', factura.archivoFacturas?.id, 'view']" >{{ factura.archivoFacturas?.nombre }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/factura', factura.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/factura', factura.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(factura)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

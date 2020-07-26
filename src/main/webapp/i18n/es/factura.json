@@ -30,7 +30,8 @@
       "archivopdf": "Archivopdf",
       "estado": "Estado",
       "dni": "Dni",
-      "socio": "Socio"
+      "socio": "Socio",
+      "archivoFacturas": "Archivo Facturas"
     }
   }
 }

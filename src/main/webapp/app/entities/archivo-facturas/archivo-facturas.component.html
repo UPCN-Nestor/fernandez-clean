@@ -1,0 +1,78 @@
+<div>
+    <h2 id="page-heading">
+        <span >Historial de archivos de facturas</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-archivo-facturas" [routerLink]="['/archivo-facturas/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span >
+                Cargar nuevo archivo ZIP de facturas
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="archivoFacturas?.length === 0">
+        <span jhiTranslate="ofVApp.archivoFacturas.home.notFound">No archivoFacturas found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="archivoFacturas?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nombre"><span jhiTranslate="ofVApp.archivoFacturas.nombre">Nombre</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="fecha"><span jhiTranslate="ofVApp.archivoFacturas.fecha">Fecha</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="archivoBlob"><span jhiTranslate="ofVApp.archivoFacturas.archivoBlob">Archivo Blob</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let archivoFacturas of archivoFacturas ;trackBy: trackId">
+                    <td><a [routerLink]="['/archivo-facturas', archivoFacturas.id, 'view']">{{ archivoFacturas.id }}</a></td>
+                    <td>{{ archivoFacturas.nombre }}</td>
+                    <td>{{ archivoFacturas.fecha | date:'mediumDate' }}</td>
+                    <td>
+                        <a *ngIf="archivoFacturas.archivoBlob" (click)="openFile(archivoFacturas.archivoBlobContentType, archivoFacturas.archivoBlob)" jhiTranslate="entity.action.open">open</a>
+                        <span *ngIf="archivoFacturas.archivoBlob">{{ archivoFacturas.archivoBlobContentType }}, {{ byteSize(archivoFacturas.archivoBlob) }}</span>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/archivo-facturas', archivoFacturas.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/archivo-facturas', archivoFacturas.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(archivoFacturas)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="archivoFacturas?.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

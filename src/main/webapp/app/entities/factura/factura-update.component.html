@@ -108,6 +108,14 @@
                     <input type="text" class="form-control" name="socio" id="field_socio"
                            formControlName="socio"/>
                 </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ofVApp.factura.archivoFacturas" for="field_archivoFacturas">Archivo Facturas</label>
+                    <select class="form-control" id="field_archivoFacturas" name="archivoFacturas" formControlName="archivoFacturas">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="archivoFacturasOption.id === editForm.get('archivoFacturas')!.value?.id ? editForm.get('archivoFacturas')!.value : archivoFacturasOption" *ngFor="let archivoFacturasOption of archivofacturas; trackBy: trackById">{{ archivoFacturasOption.nombre }}</option>
+                    </select>
+                </div>
             </div>
 
             <div>

@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 
 import { IFactura, Factura } from 'app/shared/model/factura.model';
 import { FacturaService } from './factura.service';
+import { IArchivoFacturas } from 'app/shared/model/archivo-facturas.model';
+import { ArchivoFacturasService } from 'app/entities/archivo-facturas/archivo-facturas.service';
 
 @Component({
   selector: 'jhi-factura-update',
@@ -14,6 +16,7 @@ import { FacturaService } from './factura.service';
 })
 export class FacturaUpdateComponent implements OnInit {
   isSaving = false;
+  archivofacturas: IArchivoFacturas[] = [];
   vencimiento1Dp: any;
   vencimiento2Dp: any;
 
@@ -33,14 +36,22 @@ export class FacturaUpdateComponent implements OnInit {
     archivopdf: [],
     estado: [],
     dni: [],
-    socio: []
+    socio: [],
+    archivoFacturas: []
   });
 
-  constructor(protected facturaService: FacturaService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected facturaService: FacturaService,
+    protected archivoFacturasService: ArchivoFacturasService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ factura }) => {
       this.updateForm(factura);
+
+      this.archivoFacturasService.query().subscribe((res: HttpResponse<IArchivoFacturas[]>) => (this.archivofacturas = res.body || []));
     });
   }
 
@@ -61,7 +72,8 @@ export class FacturaUpdateComponent implements OnInit {
       archivopdf: factura.archivopdf,
       estado: factura.estado,
       dni: factura.dni,
-      socio: factura.socio
+      socio: factura.socio,
+      archivoFacturas: factura.archivoFacturas
     });
   }
 
@@ -97,7 +109,8 @@ export class FacturaUpdateComponent implements OnInit {
       archivopdf: this.editForm.get(['archivopdf'])!.value,
       estado: this.editForm.get(['estado'])!.value,
       dni: this.editForm.get(['dni'])!.value,
-      socio: this.editForm.get(['socio'])!.value
+      socio: this.editForm.get(['socio'])!.value,
+      archivoFacturas: this.editForm.get(['archivoFacturas'])!.value
     };
   }
 
@@ -115,5 +128,9 @@ export class FacturaUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackById(index: number, item: IArchivoFacturas): any {
+    return item.id;
   }
 }

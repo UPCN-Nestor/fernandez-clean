@@ -1,5 +1,6 @@
 package com.ofv.ofv.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -65,6 +66,10 @@ public class Factura implements Serializable {
 
     @Column(name = "socio")
     private String socio;
+
+    @ManyToOne
+    @JsonIgnoreProperties("facturas")
+    private ArchivoFacturas archivoFacturas;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -268,6 +273,19 @@ public class Factura implements Serializable {
 
     public void setSocio(String socio) {
         this.socio = socio;
+    }
+
+    public ArchivoFacturas getArchivoFacturas() {
+        return archivoFacturas;
+    }
+
+    public Factura archivoFacturas(ArchivoFacturas archivoFacturas) {
+        this.archivoFacturas = archivoFacturas;
+        return this;
+    }
+
+    public void setArchivoFacturas(ArchivoFacturas archivoFacturas) {
+        this.archivoFacturas = archivoFacturas;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

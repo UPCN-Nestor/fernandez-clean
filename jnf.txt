@@ -1,0 +1,68 @@
+hs~
+2
+5
+
+
+
+usuario+
+
+nombre
+dni (valida esto solo?)
+socio (ya con esto te crea tus suministros)
+
+
+suministro
+
+user_id
+suministro
+servicio
+inmueble
+usuario
+dni
+tarifa
+
+
+facturas
+
++  archivo_facturas_id
+
+
+
+
+preguntar/pedir
+
+- mail server
+- schema diferente al de wordpress en db?
+- qué validar al crear sumi? dni/cuit puede ser confuso entre esos dos, usuario (nombre) también tiene dificultades
+- las facturas se van a cargar literalmente como nos las pasaron, con un zip con el csv y otro zip adentro?
+	- uno es un rar y otro un zip!! usar todo zip por ahora
+- cómo van a manejar que se cargue el pago? viene un campo "paga/impaga", va a venir la factura actualizada en el próximo zip?
+	o no mostrar ese campo?
+- los suministros activos los saco de un group by de las facturas (no queda otra), i.e. no va a poder adherir el socio nuevo que no tenga facturación
+- por ahora la idea es que al registrarse, se adhieran todos los suministros del socio ingresado. Después se pueden agregar suministros individuales nuevos.
+
+
+recordar/hacer
+
+- configurar con spring el path para tirar los zips
+- poder borrar archivo de facturas (y todas sus facturas asociadas)
+- celeste un poco más oscuro para que pueda quedar letra blanca
+- error dni inválido
+- crear suministros del socio al crear usuario
+
+
+
+
+
+
+Hola Diego, disculpá que joda el domingo, terminé con la carga del ZIP y el registro de usuario, te paso un borrador de las observaciones de las que fui tomando nota, *no hay nada que tenga apuro*.
+
+* Nos van a hacer falta los datos de su servidor de e-mails (ya lo charlamos, lo paso acá en limpio)
+* El historial de archivos de facturas va a permitir borrar un ZIP cargado y todas las facturas asociadas de la db (si no donde carguen uno mal se les va a ensuciar todo; esto era mucho más difícil de manejar si íbamos por el camino de subirlo por FTP y monitorear la carpeta).
+* El usuario de la db sólo tiene acceso al schema de wordpress y no tiene permisos para crear otro. A nosotros nos da lo mismo, pero sería más prolijo tener uno diferente (incluso dos, para tener un ambiente de test "pre producción").
+* Sería ideal tener un usuario del Linux con permisos básicos para ir probando que levante bien el JAR, o bien coordinar con el de Sistemas para pasarle uno de estos builds intermedios y que lo pruebe él, para anticiparnos a cualquier cosa que pueda pasar.
+* No me acuerdo si teníamos definido qué validar al crear usuario (sí recuerdo que no lo querían dejar abierto). Tengo un campo "DNI/CUIT" pero no hay un campo "tipo de documento", por lo tanto no puedo ver caso por caso cuál pedir. Pero aún así me parece más privado que el nombre, y menos propenso a errores (a lo sumo probará dos veces, vs. problemas con acentos, espacios, etc.)
+* Necesitamos la confirmación de que las facturas se van a cargar con el archivo exacto que nos pasaron a nosotros. Ahora está implementado para descomprimir un zip, tomar el comprobantes.csv que está adentro y volver a descomprimir el comprobantes.zip que está adentro. Puede que el segundo zippeado haya sido sólo para pasarnos la info a nosotros, porque además era un rar (igual si hace falta lo proceso así, primero rar y adentro zip).
+* ¿Cómo van a manejar el informar si está paga o impaga? ¿Va a venir la factura actualizada en el siguiente zip? Digo porque en el csv viene un campo "paga/impaga" y no sé si querrán mostrarlo o ignorarlo. Supongo que ignorarlo.
+* Los suministros activos los saco de un group by de las facturas (no queda otra), i.e. no se va a poder adherir un socio nuevo hasta que tenga facturación.
+* Para mantenerlo sencillo, por ahora mi idea es que al registrarse pida socio y dni, y se adhieran todos los suministros del socio ingresado. Después se podrán agregar suministros individuales nuevos.

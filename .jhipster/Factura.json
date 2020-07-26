@@ -1,7 +1,15 @@
 {
     "fluentMethods": true,
     "clientRootFolder": "",
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipName": "archivoFacturas",
+            "otherEntityName": "archivoFacturas",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "nombre",
+            "otherEntityRelationshipName": "factura"
+        }
+    ],
     "fields": [
         {
             "fieldName": "suministro",

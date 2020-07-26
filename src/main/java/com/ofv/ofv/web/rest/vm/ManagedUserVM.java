@@ -15,6 +15,9 @@ public class ManagedUserVM extends UserDTO {
     @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
     private String password;
 
+    private String dni;
+    private String socio;
+
     public ManagedUserVM() {
         // Empty constructor needed for Jackson.
     }
@@ -26,6 +29,23 @@ public class ManagedUserVM extends UserDTO {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public String getSocio() {
+        return socio;
+    }
+
+    public void setSocio(String socio) {
+        this.socio = socio;
+    }
+
 
     @Override
     public String toString() {

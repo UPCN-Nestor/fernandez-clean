@@ -17,8 +17,8 @@
                 </a>
             </li>
             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <a class="nav-link" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
+            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" class="nav-item" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <a class="nav-link" href="javascript:void(0);" id="entity-menu" routerLink="archivo-facturas" routerLinkActive="active" >
                     <span>
                         <fa-icon icon="th-list"></fa-icon>
                         <span>
@@ -35,6 +35,28 @@
                     </li>
        
                 </ul>-->
+            </li>
+            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entities-menu">
+                    <span>
+                        <fa-icon icon="th-list"></fa-icon>
+                        <span>ENTIDADES</span>
+                    </span>
+                </a>
+                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
+                    <li>
+                        <a class="dropdown-item" routerLink="suministro" routerLinkActive="active" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span >Suministros</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="factura" routerLinkActive="active" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span >Facturas</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">

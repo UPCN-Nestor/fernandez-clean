@@ -71,4 +71,6 @@ export class NavbarComponent implements OnInit {
   getImageUrl(): string {
     return this.isAuthenticated() ? this.accountService.getImageUrl() : '';
   }
+
+  cargaFacturas(): void {}
 }

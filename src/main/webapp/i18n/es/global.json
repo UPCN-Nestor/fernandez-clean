@@ -8,6 +8,8 @@
       "entities": {
         "main": "Entidades",
         "factura": "Factura",
+        "archivoFacturas": "Archivo Facturas",
+        "suministro": "Suministro",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

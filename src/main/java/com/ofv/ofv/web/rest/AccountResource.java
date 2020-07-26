@@ -63,8 +63,23 @@ public class AccountResource {
         if (!checkPasswordLength(managedUserVM.getPassword())) {
             throw new InvalidPasswordException();
         }
+
+        log.debug("*****************" + managedUserVM.getDni() + "***" + managedUserVM.getSocio());
+
+        if(!comprobarDNI(managedUserVM)) {
+            throw new VerificacionException();
+        }
+
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
         mailService.sendActivationEmail(user);
+    }
+
+
+    private boolean comprobarDNI(ManagedUserVM managedUserVM) {
+        String socio = managedUserVM.getSocio();
+        String dni = managedUserVM.getDni();
+
+        return userRepository.coincideSocioDni(socio, dni) > 0;
     }
 
     /**

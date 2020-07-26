@@ -1,4 +1,5 @@
 import { Moment } from 'moment';
+import { IArchivoFacturas } from 'app/shared/model/archivo-facturas.model';
 
 export interface IFactura {
   id?: number;
@@ -17,6 +18,7 @@ export interface IFactura {
   estado?: string;
   dni?: string;
   socio?: string;
+  archivoFacturas?: IArchivoFacturas;
 }
 
 export class Factura implements IFactura {
@@ -36,6 +38,7 @@ export class Factura implements IFactura {
     public archivopdf?: string,
     public estado?: string,
     public dni?: string,
-    public socio?: string
+    public socio?: string,
+    public archivoFacturas?: IArchivoFacturas
   ) {}
 }
