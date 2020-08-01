@@ -18,7 +18,8 @@
       },
       "nombre": "Nombre",
       "fecha": "Fecha",
-      "archivoBlob": "Archivo Blob"
+      "archivoBlob": "Archivo Blob",
+      "archivoCsv": "Archivo Csv"
     }
   }
 }

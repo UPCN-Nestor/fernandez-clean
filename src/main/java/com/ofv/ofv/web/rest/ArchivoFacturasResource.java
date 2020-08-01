@@ -170,6 +170,7 @@ public class ArchivoFacturasResource {
     public void procesarZips(ArchivoFacturas archivo, Long id) {
         
         String zipPath = "e:/FernandezOfV/facturas" + archivo.getFecha() + ".zip";
+        String csvPath = "e:/FernandezOfV/facturas" + archivo.getFecha() + ".csv";
         String unzipPath = "e:/FernandezOfV/facturas" + archivo.getFecha() + "/";
 
         Blob blob;
@@ -182,10 +183,16 @@ public class ArchivoFacturasResource {
             out.write(buff);
             out.close();
 
-            unZipIt(zipPath, unzipPath);
-            unZipIt(unzipPath + "/comprobantes.zip", unzipPath + "/comprobantes/");
+            Blob csv = new javax.sql.rowset.serial.SerialBlob(archivo.getArchivoCsv());
+            //InputStream in = blob.getBinaryStream();
+            file = new File(csvPath);
+            out = new FileOutputStream(file);
+            buff = csv.getBytes(1, (int) csv.length());
+            out.write(buff);
+            out.close();
 
-            procesarCsv(unzipPath + "/comprobantes.csv", id);
+            unZipIt(zipPath, unzipPath);
+            procesarCsv(csvPath, archivo);
 
         } catch (SerialException e) {
             // TODO Auto-generated catch block
@@ -203,7 +210,7 @@ public class ArchivoFacturasResource {
     }
 
 
-    public void procesarCsv(String csvFile, Long id) {
+    public void procesarCsv(String csvFile, ArchivoFacturas archivo) {
 
         String line = "";
         String cvsSplitBy = "\\|";
@@ -229,7 +236,7 @@ public class ArchivoFacturasResource {
                 nueva.setEstado(lineSplit[13]);
                 nueva.setDni(lineSplit[15]);
                 nueva.setSocio(lineSplit[16]);
-                nueva.setId(id);
+                nueva.setArchivoFacturas(archivo);
                 
                 fR.save(nueva);
                 

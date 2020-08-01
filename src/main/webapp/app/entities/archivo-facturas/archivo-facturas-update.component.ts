@@ -19,6 +19,8 @@ export class ArchivoFacturasUpdateComponent implements OnInit {
   isSaving = false;
   fechaDp: any;
 
+  @ViewChild('file') file: any;
+
   fileName = '';
 
   editForm = this.fb.group({
@@ -26,7 +28,9 @@ export class ArchivoFacturasUpdateComponent implements OnInit {
     nombre: [],
     fecha: [],
     archivoBlob: [],
-    archivoBlobContentType: []
+    archivoBlobContentType: [],
+    archivoCsv: [],
+    archivoCsvContentType: []
   });
 
   constructor(
@@ -49,7 +53,9 @@ export class ArchivoFacturasUpdateComponent implements OnInit {
       nombre: archivoFacturas.nombre,
       fecha: archivoFacturas.fecha,
       archivoBlob: archivoFacturas.archivoBlob,
-      archivoBlobContentType: archivoFacturas.archivoBlobContentType
+      archivoBlobContentType: archivoFacturas.archivoBlobContentType,
+      archivoCsv: archivoFacturas.archivoCsv,
+      archivoCsvContentType: archivoFacturas.archivoCsvContentType
     });
   }
 
@@ -61,10 +67,8 @@ export class ArchivoFacturasUpdateComponent implements OnInit {
     this.dataUtils.openFile(contentType, base64String);
   }
 
-  @ViewChild('file') file: any;
-
   setFileData(event: any, field: string, isImage: boolean): void {
-    var input = event.srcElement;
+    const input = event.srcElement;
     this.fileName = input.files[0].name;
 
     this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe(null, (err: JhiFileLoadError) => {
@@ -95,7 +99,9 @@ export class ArchivoFacturasUpdateComponent implements OnInit {
       nombre: this.fileName,
       fecha: moment(),
       archivoBlobContentType: this.editForm.get(['archivoBlobContentType'])!.value,
-      archivoBlob: this.editForm.get(['archivoBlob'])!.value
+      archivoBlob: this.editForm.get(['archivoBlob'])!.value,
+      archivoCsvContentType: this.editForm.get(['archivoCsvContentType'])!.value,
+      archivoCsv: this.editForm.get(['archivoCsv'])!.value
     };
   }
 

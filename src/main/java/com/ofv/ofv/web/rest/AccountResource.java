@@ -1,5 +1,6 @@
 package com.ofv.ofv.web.rest;
 
+import com.ofv.ofv.domain.Suministro;
 import com.ofv.ofv.domain.User;
 import com.ofv.ofv.repository.UserRepository;
 import com.ofv.ofv.security.SecurityUtils;
@@ -14,12 +15,17 @@ import com.ofv.ofv.web.rest.vm.ManagedUserVM;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.reactor.DebugAgentEnvironmentPostProcessor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import java.net.URISyntaxException;
 import java.util.*;
+
+import com.ofv.ofv.domain.Suministro;
 
 /**
  * REST controller for managing the current user's account.
@@ -42,20 +48,27 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    private final SuministroResource sR;
+
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService,
+            SuministroResource sR) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.sR = sR;
     }
 
     /**
      * {@code POST  /register} : register the user.
      *
      * @param managedUserVM the managed user View Model.
-     * @throws InvalidPasswordException {@code 400 (Bad Request)} if the password is incorrect.
-     * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
-     * @throws LoginAlreadyUsedException {@code 400 (Bad Request)} if the login is already used.
+     * @throws InvalidPasswordException  {@code 400 (Bad Request)} if the password
+     *                                   is incorrect.
+     * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is
+     *                                   already used.
+     * @throws LoginAlreadyUsedException {@code 400 (Bad Request)} if the login is
+     *                                   already used.
      */
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
@@ -64,14 +77,39 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
 
-        log.debug("*****************" + managedUserVM.getDni() + "***" + managedUserVM.getSocio());
-
-        if(!comprobarDNI(managedUserVM)) {
+        if (!comprobarDNI(managedUserVM)) {
             throw new VerificacionException();
         }
 
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
+        agregarSuministros(managedUserVM.getSocio(), user);
+        
         mailService.sendActivationEmail(user);
+    }
+
+    private void agregarSuministros(String socio, User user) {
+        List<Object[]> ss = sR.getAllSuministrosBySocio(socio);
+
+        for (Object[] s : ss) {
+            Suministro nuevo = new Suministro();
+
+            nuevo.setSuministro((String) s[1]);
+            nuevo.setUsuario((String) s[2]);
+            nuevo.setDni((String) s[3]);
+            nuevo.setInmueble((String) s[4]);
+            nuevo.setServicio((String) s[5]);
+            nuevo.setTarifa((String) s[6]);
+            Set<User> u = new HashSet<User>();
+            u.add(user);
+            nuevo.setUsers(u);
+
+            try {
+                sR.createSuministro(nuevo);
+            } catch (URISyntaxException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
 
 

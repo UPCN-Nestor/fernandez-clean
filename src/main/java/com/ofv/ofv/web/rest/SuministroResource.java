@@ -1,7 +1,10 @@
 package com.ofv.ofv.web.rest;
 
 import com.ofv.ofv.domain.Suministro;
+import com.ofv.ofv.domain.User;
 import com.ofv.ofv.repository.SuministroRepository;
+import com.ofv.ofv.security.SecurityUtils;
+import com.ofv.ofv.service.UserService;
 import com.ofv.ofv.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -40,9 +43,11 @@ public class SuministroResource {
     private String applicationName;
 
     private final SuministroRepository suministroRepository;
+    private final UserService uS;
 
-    public SuministroResource(SuministroRepository suministroRepository) {
+    public SuministroResource(SuministroRepository suministroRepository, UserService uS) {
         this.suministroRepository = suministroRepository;
+        this.uS = uS;
     }
 
     /**
@@ -103,6 +108,21 @@ public class SuministroResource {
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/suministros/u")
+    public List<Suministro> getAllSuministrosByUserid() {
+        
+        Optional<User> isUser = uS.getUserWithAuthorities();
+        User user = isUser.get();
+
+        return suministroRepository.findAllByUserid(user.getId());
+    }
+
+   
+    public List<Object[]> getAllSuministrosBySocio(String socio) {
+
+        return suministroRepository.findEnVistaPorSocio(socio);
     }
 
     /**

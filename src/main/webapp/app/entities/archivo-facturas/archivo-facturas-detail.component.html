@@ -23,6 +23,13 @@
                         {{ archivoFacturas.archivoBlobContentType }}, {{ byteSize(archivoFacturas.archivoBlob) }}
                     </div>
                 </dd>
+                <dt><span jhiTranslate="ofVApp.archivoFacturas.archivoCsv">Archivo Csv</span></dt>
+                <dd>
+                    <div *ngIf="archivoFacturas.archivoCsv">
+                        <a (click)="openFile(archivoFacturas?.archivoCsvContentType!, archivoFacturas?.archivoCsv)" jhiTranslate="entity.action.open">open</a>
+                        {{ archivoFacturas.archivoCsvContentType }}, {{ byteSize(archivoFacturas.archivoCsv) }}
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

@@ -26,4 +26,10 @@ public interface SuministroRepository extends JpaRepository<Suministro, Long> {
 
     @Query("select suministro from Suministro suministro left join fetch suministro.users where suministro.id =:id")
     Optional<Suministro> findOneWithEagerRelationships(@Param("id") Long id);
+    
+    @Query(value="select * from v_suministros v where trim(v.socio) = :socio",  nativeQuery=true)
+    List<Object[]> findEnVistaPorSocio(@Param("socio") String socio);
+
+    @Query(value = "select s.* from Suministro s left join suministro_user su on s.id = su.suministro_id where su.user_id = :userid", nativeQuery = true)
+    List<Suministro> findAllByUserid(@Param("userid") Long userid);
 }

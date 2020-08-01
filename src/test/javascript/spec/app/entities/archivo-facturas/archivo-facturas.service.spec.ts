@@ -24,7 +24,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new ArchivoFacturas(0, 'AAAAAAA', currentDate, 'image/png', 'AAAAAAA');
+      elemDefault = new ArchivoFacturas(0, 'AAAAAAA', currentDate, 'image/png', 'AAAAAAA', 'image/png', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -71,7 +71,8 @@ describe('Service Tests', () => {
           {
             nombre: 'BBBBBB',
             fecha: currentDate.format(DATE_FORMAT),
-            archivoBlob: 'BBBBBB'
+            archivoBlob: 'BBBBBB',
+            archivoCsv: 'BBBBBB'
           },
           elemDefault
         );
@@ -95,7 +96,8 @@ describe('Service Tests', () => {
           {
             nombre: 'BBBBBB',
             fecha: currentDate.format(DATE_FORMAT),
-            archivoBlob: 'BBBBBB'
+            archivoBlob: 'BBBBBB',
+            archivoCsv: 'BBBBBB'
           },
           elemDefault
         );

@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-archivo-facturas-heading">Cargar nuevo archivo ZIP de facturas</h2>
+            <h2 id="jhi-archivo-facturas-heading">Cargar nuevos archivos de facturas</h2>
 
             <div>
                 <jhi-alert-error></jhi-alert-error>
@@ -45,6 +45,25 @@
                            formControlName="archivoBlob"/>
                     <input type="hidden" class="form-control" name="archivoBlobContentType" id="field_archivoBlobContentType"
                            formControlName="archivoBlobContentType" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_archivoCsv">Seleccione archivo CSV</label>
+                    <div>
+                        <div *ngIf="editForm.get('archivoCsv')!.value" class="form-text text-danger clearfix">
+                            <a class="pull-left" (click)="openFile(editForm.get('archivoCsvContentType')!.value, editForm.get('archivoCsv')!.value)" jhiTranslate="entity.action.open">open</a><br>
+                            <span class="pull-left">{{ editForm.get('archivoCsvContentType')!.value }}, {{ byteSize(editForm.get('archivoCsv')!.value) }}</span>
+                            <button type="button" (click)="editForm.patchValue({archivoCsv: null});editForm.patchValue({archivoCsvContentType: null});"
+                                    class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon icon="times"></fa-icon>
+                            </button>
+                        </div>
+                        <input #file type="file" id="file_archivoCsv" (change)="setFileData($event, 'archivoCsv', false)" ></input>
+                    </div>
+                    <input type="hidden" class="form-control" name="archivoCsv" id="field_archivoCsv"
+                           formControlName="archivoCsv"/>
+                    <input type="hidden" class="form-control" name="archivoCsvContentType" id="field_archivoCsvContentType"
+                           formControlName="archivoCsvContentType" />
                 </div>
             </div>
 

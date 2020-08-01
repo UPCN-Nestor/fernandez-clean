@@ -55,6 +55,8 @@ export class LoginModalComponent implements AfterViewInit {
             this.router.url.startsWith('/account/reset/')
           ) {
             this.router.navigate(['']);
+          } else {
+            this.router.navigate(['/factura']);
           }
         },
         () => (this.authenticationError = true)

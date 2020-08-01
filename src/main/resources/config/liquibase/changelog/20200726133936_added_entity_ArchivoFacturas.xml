@@ -28,6 +28,12 @@
             <column name="archivo_blob_content_type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="archivo_csv" type="longblob">
+                <constraints nullable="true" />
+            </column>
+            <column name="archivo_csv_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
     </changeSet>

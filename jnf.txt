@@ -1,7 +1,7 @@
 hs~
 2
 5
-
+5
 
 
 usuario+
@@ -27,6 +27,22 @@ facturas
 +  archivo_facturas_id
 
 
+Host:  jnf.coop
+FTPuser: webmaster
+FTPpass: nb78jw60iw83cw16
+
+Base de datos (ya está creada, vacias):
+DBname: jnfcoop_wp
+DBuser: jnfcoop_wp
+DBpass: gn03qa68tw53du68
+
+El phpmyadmin está en  https://jnf.coop/vr81bd45pg61um41
+User y pass idem a los de la DB.
+
+
+Apache 2.4.6 (SSL certs by letsencrypt)
+php 7.4.7
+MariaDB 5.6.65
 
 
 preguntar/pedir
@@ -44,12 +60,27 @@ preguntar/pedir
 
 recordar/hacer
 
-- configurar con spring el path para tirar los zips
+- pantalla usuario (facturas)
+- agregar campo csv
+- registro con socio y adherir sumis
+- agregar sumi
+- configurar con spring el path para tirar los zips -- y en facturaresource cuando se lee
+
 - poder borrar archivo de facturas (y todas sus facturas asociadas)
 - celeste un poco más oscuro para que pueda quedar letra blanca
 - error dni inválido
-- crear suministros del socio al crear usuario
 - google analytics
+- fecha en detalle archivo facturas sale mal
+- test en cel
+
+- verificar que el sumi del que se piden facturas es propio (logged user)
+- verificar que la factura que se pide es de un sumi propio (logged user)
+
+
+DEPLOY
+
+- v_suministros!
+
 
 -Una sola página con menú a la izquierda y facturas, sin bardo de mensajes entre componentes
 -Un item en el menú por suministro, eliminar con una "x" en el ítem (editar nombre si hace falta también), "agregar nuevo" al final. Scroll on click p/mobile. 

@@ -1,1 +1,3 @@
-{ "rules": { "no-var-keyword": false } }
+{
+  "rules": { "no-var-keyword": false }
+}

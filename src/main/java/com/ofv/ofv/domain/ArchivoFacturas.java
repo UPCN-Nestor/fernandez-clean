@@ -33,6 +33,13 @@ public class ArchivoFacturas implements Serializable {
     @Column(name = "archivo_blob_content_type")
     private String archivoBlobContentType;
 
+    @Lob
+    @Column(name = "archivo_csv")
+    private byte[] archivoCsv;
+
+    @Column(name = "archivo_csv_content_type")
+    private String archivoCsvContentType;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -93,6 +100,32 @@ public class ArchivoFacturas implements Serializable {
     public void setArchivoBlobContentType(String archivoBlobContentType) {
         this.archivoBlobContentType = archivoBlobContentType;
     }
+
+    public byte[] getArchivoCsv() {
+        return archivoCsv;
+    }
+
+    public ArchivoFacturas archivoCsv(byte[] archivoCsv) {
+        this.archivoCsv = archivoCsv;
+        return this;
+    }
+
+    public void setArchivoCsv(byte[] archivoCsv) {
+        this.archivoCsv = archivoCsv;
+    }
+
+    public String getArchivoCsvContentType() {
+        return archivoCsvContentType;
+    }
+
+    public ArchivoFacturas archivoCsvContentType(String archivoCsvContentType) {
+        this.archivoCsvContentType = archivoCsvContentType;
+        return this;
+    }
+
+    public void setArchivoCsvContentType(String archivoCsvContentType) {
+        this.archivoCsvContentType = archivoCsvContentType;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -119,6 +152,8 @@ public class ArchivoFacturas implements Serializable {
             ", fecha='" + getFecha() + "'" +
             ", archivoBlob='" + getArchivoBlob() + "'" +
             ", archivoBlobContentType='" + getArchivoBlobContentType() + "'" +
+            ", archivoCsv='" + getArchivoCsv() + "'" +
+            ", archivoCsvContentType='" + getArchivoCsvContentType() + "'" +
             "}";
     }
 }

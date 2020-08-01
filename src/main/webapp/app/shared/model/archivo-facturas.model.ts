@@ -6,6 +6,8 @@ export interface IArchivoFacturas {
   fecha?: Moment;
   archivoBlobContentType?: string;
   archivoBlob?: any;
+  archivoCsvContentType?: string;
+  archivoCsv?: any;
 }
 
 export class ArchivoFacturas implements IArchivoFacturas {
@@ -14,6 +16,8 @@ export class ArchivoFacturas implements IArchivoFacturas {
     public nombre?: string,
     public fecha?: Moment,
     public archivoBlobContentType?: string,
-    public archivoBlob?: any
+    public archivoBlob?: any,
+    public archivoCsvContentType?: string,
+    public archivoCsv?: any
   ) {}
 }

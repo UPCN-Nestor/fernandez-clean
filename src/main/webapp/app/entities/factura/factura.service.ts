@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -38,6 +38,18 @@ export class FacturaService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  allBySumi(sumi: string): Observable<EntityArrayResponseType> {
+    return this.http
+      .get<IFactura[]>(`${this.resourceUrl}/s/${sumi}`, { observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  verComprobante(factura: IFactura) {
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', 'application/pdf');
+    return this.http.get<Blob>(this.resourceUrl + '/pdf/' + factura.id);
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
@@ -49,7 +61,7 @@ export class FacturaService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  protected convertDateFromClient(factura: IFactura): IFactura {
+  convertDateFromClient(factura: IFactura): IFactura {
     const copy: IFactura = Object.assign({}, factura, {
       vencimiento1: factura.vencimiento1 && factura.vencimiento1.isValid() ? factura.vencimiento1.format(DATE_FORMAT) : undefined,
       vencimiento2: factura.vencimiento2 && factura.vencimiento2.isValid() ? factura.vencimiento2.format(DATE_FORMAT) : undefined

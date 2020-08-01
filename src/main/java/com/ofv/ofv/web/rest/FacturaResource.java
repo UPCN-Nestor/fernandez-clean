@@ -9,10 +9,16 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -87,7 +93,15 @@ public class FacturaResource {
     @GetMapping("/facturas")
     public List<Factura> getAllFacturas() {
         log.debug("REST request to get all Facturas");
+
         return facturaRepository.findAll();
+    }
+
+    @GetMapping("/facturas/s/{sumi}")
+    public List<Factura> getAllFacturasBySuministro(@PathVariable String sumi) {
+        log.debug("REST request to get all Facturas by " + sumi);
+        
+        return facturaRepository.findAllBySuministro(sumi);
     }
 
     /**
@@ -114,5 +128,32 @@ public class FacturaResource {
         log.debug("REST request to delete Factura : {}", id);
         facturaRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    @PostMapping("/facturas/pdf")
+    public ResponseEntity<byte[]> getPDF(@RequestBody Factura factura) {
+        Factura f = factura;
+
+        String path = "e:/FernandezOfV/facturas" + f.getArchivoFacturas().getFecha() + "/home/pdf/invoice/mail/" + f.getArchivopdf();
+        File file = new File(path);
+        
+        FileInputStream fis = null;
+        byte[] bArray = new byte[(int) file.length()];
+        try {
+          fis = new FileInputStream(file);
+          fis.read(bArray);
+          fis.close();                   
+        } catch(IOException ioExp){
+          ioExp.printStackTrace();
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        // Here you have to set the actual filename of your pdf
+        String filename = "output.pdf";
+        headers.setContentDispositionFormData(filename, filename);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        ResponseEntity<byte[]> response = new ResponseEntity<>(bArray, headers, HttpStatus.OK);
+        return response;
     }
 }
