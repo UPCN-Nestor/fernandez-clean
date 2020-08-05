@@ -2,11 +2,6 @@
     <h2 id="page-heading">    
     </h2>
 
-    <jhi-alert-error></jhi-alert-error>
-
-    <jhi-alert></jhi-alert>
-
-
     <div class="row">
         <div class="col-md-3" style="padding:30px!important;">
             <h2 id="page-heading">Mis suministros</h2>
@@ -17,15 +12,27 @@
             
             <div class="card bg-dark border-info mb-3" >
                 <div class="card-body">
-                <p class="card-text">Puede vincular un nuevo suministro a esta cuenta ingresando los siguientes datos
-                    (dni, nro sumi)
+                <p class="card-text">Puede vincular un nuevo suministro a esta cuenta ingresando los siguientes datos                    
+                    <input [(ngModel)]="nuevoSuministro" type="text" class="form-control" placeholder="Número de suministro" aria-label="suministro">                   
+                    <input [(ngModel)]="nuevoDni" type="text" class="form-control" placeholder="DNI o CUIT del titular" aria-label="dni">               
                 </p>       
                 <button type="button" class="btn btn-outline-info btn-block" style="color:black!important;" (click)="agregarSuministro()">Vincular nuevo suministro</button>          
                 </div>                
             </div>
-            <br/> 
+              
+            <button [hidden]="confirmarVisible" type="button" class="btn btn-outline-info btn-danger btn-block" style="color:black!important;" (click)="confirmarDesvincular()">Desvincular suministro seleccionado</button>          
+            <button [hidden]="!confirmarVisible" type="button" class="btn btn-outline-info btn-danger btn-block" style="color:black!important;" (click)="removerSuministro()">Al hacer clic se desvinculará el suministro "{{activo ? activo.inmueble + " - " + activo.servicio : ""}}" de esta cuenta. ¿Está seguro?</button>          
+               
+
         </div>
         <div class="col-md-9" *ngIf="activo" style="padding:30px!important;">
+            
+            <div #bottom></div>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <jhi-alert></jhi-alert>
+
             <div class="alert alert-warning" id="no-result" *ngIf="facturas?.length === 0">
                 <span>No se han encontrado facturas para este suministro.</span>
             </div>
@@ -46,8 +53,10 @@
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
 
-    
 </div>
+
+

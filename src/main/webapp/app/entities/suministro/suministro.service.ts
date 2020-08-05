@@ -19,6 +19,10 @@ export class SuministroService {
     return this.http.post<ISuministro>(this.resourceUrl, suministro, { observe: 'response' });
   }
 
+  createConNumeroYDNI(suministro: string, dni: string): Observable<EntityResponseType> {
+    return this.http.get<ISuministro>(this.resourceUrl + '/n/' + suministro + '/' + dni, { observe: 'response' });
+  }
+
   update(suministro: ISuministro): Observable<EntityResponseType> {
     return this.http.put<ISuministro>(this.resourceUrl, suministro, { observe: 'response' });
   }

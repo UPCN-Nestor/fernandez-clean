@@ -7,9 +7,9 @@
         "createOrEditLabel": "Crear o editar Suministro",
         "notFound": "Ningún Suministros encontrado"
       },
-      "created": "Un nuevo Suministro ha sido creado con el identificador {{ param }}",
+      "created": "Se ha vinculado un suministro con éxito",
       "updated": "Un Suministro ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Suministro ha sido eliminado con el identificador {{ param }}",
+      "deleted": "Se ha desvinculado el suministro con éxito",
       "delete": {
         "question": "¿Seguro que quiere eliminar Suministro {{ id }}?"
       },

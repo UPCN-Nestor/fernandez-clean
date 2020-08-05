@@ -30,6 +30,12 @@ public interface SuministroRepository extends JpaRepository<Suministro, Long> {
     @Query(value="select * from v_suministros v where trim(v.socio) = :socio",  nativeQuery=true)
     List<Object[]> findEnVistaPorSocio(@Param("socio") String socio);
 
+    @Query(value="select 0 as id, suministro, servicio, inmueble, usuario, dni, tarifa from v_suministros v where trim(v.suministro) = :sumi",  nativeQuery=true)
+    List<Object[]> findEnVistaPorSuministro(@Param("sumi") String sumi);
+
     @Query(value = "select s.* from Suministro s left join suministro_user su on s.id = su.suministro_id where su.user_id = :userid", nativeQuery = true)
     List<Suministro> findAllByUserid(@Param("userid") Long userid);
+
+    @Query(value = "select count(*) from v_suministros v where trim(v.suministro) = :sumi and trim(v.dni) = :dni", nativeQuery = true)
+    Integer coincideNumeroConDNI(@Param("sumi") String sumi, @Param("dni") String dni);
 }

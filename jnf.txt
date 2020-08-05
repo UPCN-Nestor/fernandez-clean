@@ -2,39 +2,24 @@ hs~
 2
 5
 5
-
-
-usuario+
-
-nombre
-dni (valida esto solo?)
-socio (ya con esto te crea tus suministros)
-
-
-suministro
-
-user_id
-suministro
-servicio
-inmueble
-usuario
-dni
-tarifa
-
-
-facturas
-
-+  archivo_facturas_id
-
+3
+4
 
 Host:  jnf.coop
 FTPuser: webmaster
 FTPpass: nb78jw60iw83cw16
 
+User:  appmaster
+Pass: pu45xk60py54fr30
+
 Base de datos (ya está creada, vacias):
 DBname: jnfcoop_wp
 DBuser: jnfcoop_wp
 DBpass: gn03qa68tw53du68
+
+DBname: dboficina
+DBuser: dboficina
+DBpass: mp28jg37dn28sn51
 
 El phpmyadmin está en  https://jnf.coop/vr81bd45pg61um41
 User y pass idem a los de la DB.
@@ -49,43 +34,24 @@ preguntar/pedir
 
 - mail server
 - schema diferente al de wordpress en db?
-- qué validar al crear sumi? dni/cuit puede ser confuso entre esos dos, usuario (nombre) también tiene dificultades
-- las facturas se van a cargar literalmente como nos las pasaron, con un zip con el csv y otro zip adentro?
-	- uno es un rar y otro un zip!! usar todo zip por ahora
-- cómo van a manejar que se cargue el pago? viene un campo "paga/impaga", va a venir la factura actualizada en el próximo zip?
-	o no mostrar ese campo?
-- los suministros activos los saco de un group by de las facturas (no queda otra), i.e. no va a poder adherir el socio nuevo que no tenga facturación
-- por ahora la idea es que al registrarse, se adhieran todos los suministros del socio ingresado. Después se pueden agregar suministros individuales nuevos.
-
 
 recordar/hacer
 
-- pantalla usuario (facturas)
-- agregar campo csv
-- registro con socio y adherir sumis
-- agregar sumi
 - configurar con spring el path para tirar los zips -- y en facturaresource cuando se lee
-
-- poder borrar archivo de facturas (y todas sus facturas asociadas)
-- celeste un poco más oscuro para que pueda quedar letra blanca
-- error dni inválido
+- poder borrar archivo de facturas (y todas sus facturas asociadas)	
 - google analytics
-- fecha en detalle archivo facturas sale mal
-- test en cel
 
 - verificar que el sumi del que se piden facturas es propio (logged user)
 - verificar que la factura que se pide es de un sumi propio (logged user)
+- relojito mientras carga facturas
 
 
 DEPLOY
 
+- verificar schema db
 - v_suministros!
+- pass admin
 
 
--Una sola página con menú a la izquierda y facturas, sin bardo de mensajes entre componentes
--Un item en el menú por suministro, eliminar con una "x" en el ítem (editar nombre si hace falta también), "agregar nuevo" al final. Scroll on click p/mobile. 
--Sacar o modif pacman
--Favicon
--Título en navegador
--Texto intro
+
 

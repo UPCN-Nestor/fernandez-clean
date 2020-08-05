@@ -5,7 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
-
+import { FileUploader } from 'ng2-file-upload';
 import { IArchivoFacturas, ArchivoFacturas } from 'app/shared/model/archivo-facturas.model';
 import { ArchivoFacturasService } from './archivo-facturas.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
@@ -22,6 +22,8 @@ export class ArchivoFacturasUpdateComponent implements OnInit {
   @ViewChild('file') file: any;
 
   fileName = '';
+  URL = 'api/archivo-facturas/multipart';
+  public uploader: FileUploader;
 
   editForm = this.fb.group({
     id: [],
@@ -39,7 +41,10 @@ export class ArchivoFacturasUpdateComponent implements OnInit {
     protected archivoFacturasService: ArchivoFacturasService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
-  ) {}
+  ) {
+    const maxFileSize = 5 * 1024 * 1024 * 1024;
+    this.uploader = new FileUploader({ url: this.URL, maxFileSize });
+  }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ archivoFacturas }) => {
@@ -83,7 +88,10 @@ export class ArchivoFacturasUpdateComponent implements OnInit {
   }
 
   save(): void {
+    this.uploader.uploadAll();
+
     this.isSaving = true;
+
     const archivoFacturas = this.createFromForm();
     if (archivoFacturas.id !== undefined) {
       this.subscribeToSaveResponse(this.archivoFacturasService.update(archivoFacturas));

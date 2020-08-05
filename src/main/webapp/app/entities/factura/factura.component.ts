@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { HttpResponse, HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
@@ -21,6 +21,13 @@ export class FacturaComponent implements OnInit, OnDestroy {
 
   activo: Suministro;
   suministros?: ISuministro[];
+
+  nuevoSuministro: string;
+  nuevoDni: string;
+
+  confirmarVisible: boolean;
+
+  @ViewChild('bottom') bottomRef: ElementRef;
 
   constructor(
     protected facturaService: FacturaService,
@@ -68,11 +75,30 @@ export class FacturaComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.factura = factura;
   }
 
-  agregarSuministro() {}
+  agregarSuministro() {
+    this.suministroService.createConNumeroYDNI(this.nuevoSuministro, this.nuevoDni).subscribe((res: HttpResponse<ISuministro>) => {
+      this.suministros.push(res.body);
+      this.activo = res.body;
+
+      this.bottomRef.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  confirmarDesvincular() {
+    this.confirmarVisible = true;
+  }
+
+  removerSuministro() {
+    this.confirmarVisible = false;
+    this.suministros.splice(this.suministros.indexOf(this.activo), 1);
+    this.suministroService.delete(this.activo.id).subscribe((res: HttpResponse<ISuministro>) => {});
+  }
 
   cambiarSuministro(suministro: ISuministro) {
     this.activo = suministro;
     this.loadAllBySumi(suministro.suministro);
+
+    this.bottomRef.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   loadAllBySumi(sumi: string): void {
@@ -100,7 +126,7 @@ export class FacturaComponent implements OnInit, OnDestroy {
     this.http.post(myUrl, copy, { responseType: 'blob' }).subscribe(
       response => {
         const blob = new Blob([response], { type: mediaType });
-        saveAs(blob, 'report.pdf');
+        saveAs(blob, 'Comprobante-' + factura.numero + '--' + factura.periodo + '.pdf');
       },
       e => {
         alert('error');

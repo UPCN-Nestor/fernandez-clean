@@ -132,6 +132,7 @@
     "userexists": "¡El nombre de usuario ya existe!",
     "emailexists": "¡La cuenta de correo ya está en uso!",
     "idexists": "Un/a nuevo/a {{entityName}} no puede tener ID",
+    "dninocoincide": "El D.N.I. o C.U.I.T. no coincide con el del titular del suministro.",
     "idnull": "ID inválido",
     "file": {
       "could.not.extract": "Could not extract file",

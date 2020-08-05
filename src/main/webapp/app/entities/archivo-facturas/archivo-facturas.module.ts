@@ -7,9 +7,10 @@ import { ArchivoFacturasDetailComponent } from './archivo-facturas-detail.compon
 import { ArchivoFacturasUpdateComponent } from './archivo-facturas-update.component';
 import { ArchivoFacturasDeleteDialogComponent } from './archivo-facturas-delete-dialog.component';
 import { archivoFacturasRoute } from './archivo-facturas.route';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
-  imports: [OfVSharedModule, RouterModule.forChild(archivoFacturasRoute)],
+  imports: [OfVSharedModule, FileUploadModule, RouterModule.forChild(archivoFacturasRoute)],
   declarations: [
     ArchivoFacturasComponent,
     ArchivoFacturasDetailComponent,

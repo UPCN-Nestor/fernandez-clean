@@ -15,8 +15,6 @@ import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 
-import { MenuizqComponent } from './mizq/mizq.component';
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -27,15 +25,7 @@ import { MenuizqComponent } from './mizq/mizq.component';
     OfVEntityModule,
     OfVAppRoutingModule
   ],
-  declarations: [
-    MainComponent,
-    NavbarComponent,
-    ErrorComponent,
-    PageRibbonComponent,
-    ActiveMenuDirective,
-    FooterComponent,
-    MenuizqComponent
-  ],
+  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   bootstrap: [MainComponent]
 })
 export class OfVAppModule {}

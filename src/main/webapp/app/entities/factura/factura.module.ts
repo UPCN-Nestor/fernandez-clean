@@ -8,9 +8,10 @@ import { FacturaUpdateComponent } from './factura-update.component';
 import { FacturaDeleteDialogComponent } from './factura-delete-dialog.component';
 import { facturaRoute } from './factura.route';
 import { CardModule } from 'primeng/card';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  imports: [OfVSharedModule, RouterModule.forChild(facturaRoute), CardModule],
+  imports: [OfVSharedModule, RouterModule.forChild(facturaRoute), CardModule, NgbModalModule],
   declarations: [FacturaComponent, FacturaDetailComponent, FacturaUpdateComponent, FacturaDeleteDialogComponent],
   entryComponents: [FacturaDeleteDialogComponent]
 })

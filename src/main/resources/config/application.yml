@@ -58,6 +58,11 @@ management:
             enabled: true
 
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 2000MB
+      max-request-size: 2000MB
   application:
     name: OfV
   profiles:

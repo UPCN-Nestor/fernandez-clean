@@ -8,7 +8,7 @@
 
                 <div class="form-group" [hidden]="!editForm.get('id')!.value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly >X</input>
                 </div>
 <!--
                 <div class="form-group">
@@ -27,10 +27,13 @@
                         </span>
                     </div>
                 </div>
--->
+            -->
                 <div class="form-group">
                     <label class="form-control-label" for="field_archivoBlob">Seleccione archivo ZIP</label>
-                    <div>
+                    <div>                            
+                        <input type="file" ng2FileSelect [uploader]="uploader" ></input>
+
+                           <!--
                         <div *ngIf="editForm.get('archivoBlob')!.value" class="form-text text-danger clearfix">
                             <a class="pull-left" (click)="openFile(editForm.get('archivoBlobContentType')!.value, editForm.get('archivoBlob')!.value)" jhiTranslate="entity.action.open">open</a><br>
                             <span class="pull-left">{{ editForm.get('archivoBlobContentType')!.value }}, {{ byteSize(editForm.get('archivoBlob')!.value) }}</span>
@@ -39,12 +42,14 @@
                                 <fa-icon icon="times"></fa-icon>
                             </button>
                         </div>
-                        <input #file type="file" id="file_archivoBlob" (change)="setFileData($event, 'archivoBlob', false)" jhiTranslate="entity.action.addblob"/>
+                        <input #file type="file" id="file_archivoBlob" (change)="setFileData($event, 'archivoBlob', false)" jhiTranslate="entity.action.addblob"/> 
+                        
                     </div>
                     <input type="hidden" class="form-control" name="archivoBlob" id="field_archivoBlob"
                            formControlName="archivoBlob"/>
                     <input type="hidden" class="form-control" name="archivoBlobContentType" id="field_archivoBlobContentType"
                            formControlName="archivoBlobContentType" />
+                           -->
                 </div>
 
                 <div class="form-group">
@@ -77,5 +82,6 @@
                 </button>
             </div>
         </form>
+
     </div>
 </div>

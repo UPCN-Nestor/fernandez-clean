@@ -3,6 +3,7 @@ package com.ofv.ofv.web.rest;
 import com.ofv.ofv.domain.Suministro;
 import com.ofv.ofv.domain.User;
 import com.ofv.ofv.repository.SuministroRepository;
+import com.ofv.ofv.repository.UserRepository;
 import com.ofv.ofv.security.SecurityUtils;
 import com.ofv.ofv.service.UserService;
 import com.ofv.ofv.web.rest.errors.BadRequestAlertException;
@@ -68,6 +69,36 @@ public class SuministroResource {
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
+
+    @GetMapping("/suministros/n/{numero}/{dni}")
+    public ResponseEntity<Suministro> createSuministroConNumeroYDNI(@PathVariable String numero, @PathVariable String dni) throws URISyntaxException {
+
+        log.debug("+++++++++++++++++++++++++++++" + suministroRepository.coincideNumeroConDNI(numero, dni));
+        if(suministroRepository.coincideNumeroConDNI(numero, dni) == 0) {
+            throw new BadRequestAlertException("No coincide número de suministro con DNI", ENTITY_NAME, "dninocoincide");
+        }
+        
+        // select 0 as id, suministro, servicio, inmueble, usuario, dni, tarifa from v_suministros v where trim(v.suministro) = :sumi
+        List<Object[]> s = suministroRepository.findEnVistaPorSuministro(numero);
+
+        Suministro toSave = new Suministro();
+        toSave.setSuministro(s.get(0)[1].toString());
+        toSave.setServicio(s.get(0)[2].toString());
+        toSave.setInmueble(s.get(0)[3].toString());
+        toSave.setUsuario(s.get(0)[4].toString());
+        toSave.setDni(s.get(0)[5].toString());
+        toSave.setTarifa(s.get(0)[6].toString());
+        
+        Optional<User> u = uS.getUserWithAuthorities();
+        toSave.addUser(u.get());
+
+        Suministro result = suministroRepository.save(toSave);
+
+        return ResponseEntity.created(new URI("/api/suministros/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
 
     /**
      * {@code PUT  /suministros} : Updates an existing suministro.

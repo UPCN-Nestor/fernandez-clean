@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -68,7 +69,7 @@ public class ArchivoFacturasResource {
     public ArchivoFacturasResource(ArchivoFacturasRepository archivoFacturasRepository, FacturaRepository fR) {
         this.archivoFacturasRepository = archivoFacturasRepository;
         this.fR = fR;
-    } 
+    }
 
     /**
      * {@code POST  /archivo-facturas} : Create a new archivoFacturas.
@@ -88,9 +89,35 @@ public class ArchivoFacturasResource {
                     "idexists");
         }
 
+        byte[] csvData = archivoFacturas.getArchivoCsv().clone();
+        archivoFacturas.setArchivoCsv(null);
+        archivoFacturas.setArchivoBlob(null);
         ArchivoFacturas result = archivoFacturasRepository.save(archivoFacturas);
-        
-        procesarZips(archivoFacturas, result.getId());
+
+        String csvPath = "e:/FernandezOfV/facturas" + LocalDate.now() + ".csv";
+
+        Blob csv;
+        try {
+            csv = new javax.sql.rowset.serial.SerialBlob(csvData);
+
+            // InputStream in = blob.getBinaryStream();
+            File file = new File(csvPath);
+            FileOutputStream out = new FileOutputStream(file);
+            byte[] buff = csv.getBytes(1, (int) csv.length());
+            out.write(buff);
+            out.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        procesarCsv(csvPath, result);
 
         return ResponseEntity
                 .created(new URI("/api/archivo-facturas/" + result.getId())).headers(HeaderUtil
@@ -116,6 +143,7 @@ public class ArchivoFacturasResource {
         if (archivoFacturas.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
         ArchivoFacturas result = archivoFacturasRepository.save(archivoFacturas);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME,
                 archivoFacturas.getId().toString())).body(result);
@@ -166,50 +194,44 @@ public class ArchivoFacturasResource {
                 .build();
     }
 
-
-    public void procesarZips(ArchivoFacturas archivo, Long id) {
-        
-        String zipPath = "e:/FernandezOfV/facturas" + archivo.getFecha() + ".zip";
-        String csvPath = "e:/FernandezOfV/facturas" + archivo.getFecha() + ".csv";
-        String unzipPath = "e:/FernandezOfV/facturas" + archivo.getFecha() + "/";
-
-        Blob blob;
+    @PostMapping(consumes = { "multipart/mixed", "multipart/form-data" }, value = "/archivo-facturas/multipart")
+    ResponseEntity<Object> multipartUpload(@RequestPart(value = "file") MultipartFile file) {
+        log.info("Received request with file {}", file.getOriginalFilename());
+        File f = new File("e:/FernandezOfV/facturas" + LocalDate.now() + ".zip");
         try {
-            blob = new javax.sql.rowset.serial.SerialBlob(archivo.getArchivoBlob());
-            //InputStream in = blob.getBinaryStream();
-            File file = new File(zipPath);
-            OutputStream out = new FileOutputStream(file);
-            byte[] buff = blob.getBytes(1, (int) blob.length());
-            out.write(buff);
-            out.close();
-
-            Blob csv = new javax.sql.rowset.serial.SerialBlob(archivo.getArchivoCsv());
-            //InputStream in = blob.getBinaryStream();
-            file = new File(csvPath);
-            out = new FileOutputStream(file);
-            buff = csv.getBytes(1, (int) csv.length());
-            out.write(buff);
-            out.close();
-
-            unZipIt(zipPath, unzipPath);
-            procesarCsv(csvPath, archivo);
-
-        } catch (SerialException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+            file.transferTo(f);
+        } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        procesarZips(f);
+
+        return ResponseEntity.accepted().build();
+    }
+
+    
+    public void procesarZips(File file) {
+        
+        String zipPath = "e:/FernandezOfV/facturas" +  LocalDate.now() + ".zip";
+        String unzipPath = "e:/FernandezOfV/facturas" +  LocalDate.now()  + "/";
+
+        Blob blob;
+        try {
+
+            unZipIt(zipPath, unzipPath);
+
+
+        } catch (Exception e) {
+            
+        } 
     }
 
 
+    
     public void procesarCsv(String csvFile, ArchivoFacturas archivo) {
 
         String line = "";
@@ -220,26 +242,31 @@ public class ArchivoFacturasResource {
             while((line = br.readLine()) != null) {
                 String[] lineSplit = line.split(cvsSplitBy);
 
-                Factura nueva = new Factura();
-                nueva.setSuministro(lineSplit[1]);
-                nueva.setUsuario(lineSplit[2]);
-                nueva.setInmueble(lineSplit[3]);
-                nueva.setPeriodo(lineSplit[4]);
-                nueva.setNumero(lineSplit[5]);
-                nueva.setVencimiento1(LocalDate.parse(lineSplit[6]));
-                nueva.setVencimiento2(LocalDate.parse(lineSplit[7]));
-                nueva.setImporte1(new BigDecimal(lineSplit[8]));
-                nueva.setImporte2(new BigDecimal(lineSplit[9]));
-                nueva.setServicio(lineSplit[10]);
-                nueva.setTarifa(lineSplit[11]);
-                nueva.setArchivopdf(lineSplit[12]);
-                nueva.setEstado(lineSplit[13]);
-                nueva.setDni(lineSplit[15]);
-                nueva.setSocio(lineSplit[16]);
+                Factura nueva = null;
+                try{
+                
+                    nueva = new Factura();
+                if(lineSplit.length > 1) nueva.setSuministro(lineSplit[1]);
+                if(lineSplit.length > 2) nueva.setUsuario(lineSplit[2]);
+                if(lineSplit.length > 3) nueva.setInmueble(lineSplit[3]);
+                if(lineSplit.length > 4) nueva.setPeriodo(lineSplit[4]);
+                if(lineSplit.length > 5) nueva.setNumero(lineSplit[5]);
+                if(lineSplit.length > 6) nueva.setVencimiento1(LocalDate.parse(lineSplit[6]));
+                if(lineSplit.length > 7) nueva.setVencimiento2(LocalDate.parse(lineSplit[7]));
+                if(lineSplit.length > 8) nueva.setImporte1(new BigDecimal(lineSplit[8]));
+                if(lineSplit.length > 9) nueva.setImporte2(new BigDecimal(lineSplit[9]));
+                if(lineSplit.length > 10) nueva.setServicio(lineSplit[10]);
+                if(lineSplit.length > 11) nueva.setTarifa(lineSplit[11]);
+                if(lineSplit.length > 12) nueva.setArchivopdf(lineSplit[12]);
+                if(lineSplit.length > 13) nueva.setEstado(lineSplit[13]);
+                if(lineSplit.length > 15) nueva.setDni(lineSplit[15]);
+                if(lineSplit.length > 16) nueva.setSocio(lineSplit[16]);
                 nueva.setArchivoFacturas(archivo);
-                
                 fR.save(nueva);
-                
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+
                 /*
                 for(String campo : lineSplit) {
                     System.out.println(campo);
@@ -283,7 +310,7 @@ public class ArchivoFacturasResource {
               String fileName = ze.getName();
               File newFile = new File(outputFolder + File.separator + fileName);
    
-              System.out.println("file unzip : "+ newFile.getAbsoluteFile());
+              //System.out.println("file unzip : "+ newFile.getAbsoluteFile());
    
                //create all non exists folders
                //else you will hit FileNotFoundException for compressed folder

@@ -14,7 +14,7 @@
                 </dd>
                 <dt><span jhiTranslate="ofVApp.archivoFacturas.fecha">Fecha</span></dt>
                 <dd>
-                    <span>{{ archivoFacturas.fecha }}</span>
+                    <span>{{ archivoFacturas.fecha | date : 'dd/MM/yyyy'  }}</span>
                 </dd>
                 <dt><span jhiTranslate="ofVApp.archivoFacturas.archivoBlob">Archivo Blob</span></dt>
                 <dd>
