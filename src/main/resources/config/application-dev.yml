@@ -68,6 +68,8 @@ spring:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:
     cache: false
+  facturas:
+    path: e:/FernandezOfV/facturass
 
 server:
   port: 8080

@@ -4,6 +4,7 @@ hs~
 5
 3
 4
+2
 
 Host:  jnf.coop
 FTPuser: webmaster
@@ -38,20 +39,25 @@ preguntar/pedir
 recordar/hacer
 
 - configurar con spring el path para tirar los zips -- y en facturaresource cuando se lee
-- poder borrar archivo de facturas (y todas sus facturas asociadas)	
-- google analytics
 
-- verificar que el sumi del que se piden facturas es propio (logged user)
-- verificar que la factura que se pide es de un sumi propio (logged user)
-- relojito mientras carga facturas
+- google analytics
+https://analytics.google.com/analytics/web/provision/?authuser=3#/report-home/a174895032w242497513p226044017
+	jnfcoop@gmail.com jnfofv2020
+- port 8081
+- sbutitulo copyright ofv
+
 
 
 DEPLOY
 
-- verificar schema db
 - v_suministros!
 - pass admin
+- crear carpeta /home/appmaster/facturas/
 
+
+rsa
+
+rsa-key-20200808
 
 
 

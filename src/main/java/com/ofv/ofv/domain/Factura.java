@@ -13,7 +13,7 @@ import java.time.LocalDate;
  * A Factura.
  */
 @Entity
-@Table(name = "factura")
+@Table(name = "factura" , indexes = { @Index(name = "IDX_MYIDX1", columnList = "numero") })
 public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,7 +34,7 @@ public class Factura implements Serializable {
     @Column(name = "periodo")
     private String periodo;
 
-    @Column(name = "numero")
+    @Column(name = "numero") 
     private String numero;
 
     @Column(name = "vencimiento_1")

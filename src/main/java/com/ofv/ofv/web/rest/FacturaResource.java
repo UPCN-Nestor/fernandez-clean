@@ -36,6 +36,9 @@ public class FacturaResource {
 
     private static final String ENTITY_NAME = "factura";
 
+    @Value("${spring.facturas.path}")
+    private String facturasPath;
+    
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
@@ -134,7 +137,7 @@ public class FacturaResource {
     public ResponseEntity<byte[]> getPDF(@RequestBody Factura factura) {
         Factura f = factura;
 
-        String path = "e:/FernandezOfV/facturas" + f.getArchivoFacturas().getFecha() + "/home/pdf/invoice/mail/" + f.getArchivopdf();
+        String path = facturasPath + "/home/pdf/invoice/mail/" + f.getArchivopdf();
         File file = new File(path);
         
         FileInputStream fis = null;

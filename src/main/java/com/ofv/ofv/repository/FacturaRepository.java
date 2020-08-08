@@ -15,7 +15,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FacturaRepository extends JpaRepository<Factura, Long> {
 
-    @Query(value = "select f.* from Factura f where trim(f.suministro) = :sumi", nativeQuery = true)
+    @Query(value = "select min(id) id, suministro, usuario, inmueble, periodo, numero, vencimiento_1, vencimiento_2, importe_1, importe_2, servicio, tarifa, archivopdf, estado, dni, socio, min(archivo_facturas_id) archivo_facturas_id from Factura f where trim(f.suministro) = :sumi group by  suministro, usuario, inmueble, periodo, numero, vencimiento_1, vencimiento_2, importe_1, importe_2, servicio, tarifa, archivopdf, estado, dni, socio", nativeQuery = true)
     List<Factura> findAllBySuministro(@Param("sumi") String sumi);
 
+    Factura findByNumero(@Param("numero") String numero);
+
+    List<Factura> findAllByArchivoFacturasId(@Param("archivo_facturas_id") Long archivoFacturasId);
 }

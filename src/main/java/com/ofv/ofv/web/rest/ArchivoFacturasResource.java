@@ -60,6 +60,9 @@ public class ArchivoFacturasResource {
 
     private static final String ENTITY_NAME = "archivoFacturas";
 
+    @Value("${spring.facturas.path}")
+    private String facturasPath;
+
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
@@ -94,7 +97,7 @@ public class ArchivoFacturasResource {
         archivoFacturas.setArchivoBlob(null);
         ArchivoFacturas result = archivoFacturasRepository.save(archivoFacturas);
 
-        String csvPath = "e:/FernandezOfV/facturas" + LocalDate.now() + ".csv";
+        String csvPath = facturasPath + LocalDate.now() + ".csv";
 
         Blob csv;
         try {
@@ -188,6 +191,12 @@ public class ArchivoFacturasResource {
     @DeleteMapping("/archivo-facturas/{id}")
     public ResponseEntity<Void> deleteArchivoFacturas(@PathVariable Long id) {
         log.debug("REST request to delete ArchivoFacturas : {}", id);
+
+        List<Factura> fs = fR.findAllByArchivoFacturasId(id);
+        for(Factura f : fs) {
+            fR.delete(f);
+        }
+
         archivoFacturasRepository.deleteById(id);
         return ResponseEntity.noContent()
                 .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
@@ -197,7 +206,7 @@ public class ArchivoFacturasResource {
     @PostMapping(consumes = { "multipart/mixed", "multipart/form-data" }, value = "/archivo-facturas/multipart")
     ResponseEntity<Object> multipartUpload(@RequestPart(value = "file") MultipartFile file) {
         log.info("Received request with file {}", file.getOriginalFilename());
-        File f = new File("e:/FernandezOfV/facturas" + LocalDate.now() + ".zip");
+        File f = new File(facturasPath + LocalDate.now() + ".zip");
         try {
             file.transferTo(f);
         } catch (IllegalStateException e) {
@@ -216,8 +225,8 @@ public class ArchivoFacturasResource {
     
     public void procesarZips(File file) {
         
-        String zipPath = "e:/FernandezOfV/facturas" +  LocalDate.now() + ".zip";
-        String unzipPath = "e:/FernandezOfV/facturas" +  LocalDate.now()  + "/";
+        String zipPath = facturasPath + LocalDate.now() + ".zip";
+        String unzipPath = facturasPath + "/";
 
         Blob blob;
         try {
@@ -238,34 +247,43 @@ public class ArchivoFacturasResource {
         String cvsSplitBy = "\\|";
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            br.readLine(); // Header
+            br.readLine(); // Heade
             while((line = br.readLine()) != null) {
                 String[] lineSplit = line.split(cvsSplitBy);
 
                 Factura nueva = null;
                 try{
-                
-                    nueva = new Factura();
-                if(lineSplit.length > 1) nueva.setSuministro(lineSplit[1]);
-                if(lineSplit.length > 2) nueva.setUsuario(lineSplit[2]);
-                if(lineSplit.length > 3) nueva.setInmueble(lineSplit[3]);
-                if(lineSplit.length > 4) nueva.setPeriodo(lineSplit[4]);
-                if(lineSplit.length > 5) nueva.setNumero(lineSplit[5]);
-                if(lineSplit.length > 6) nueva.setVencimiento1(LocalDate.parse(lineSplit[6]));
-                if(lineSplit.length > 7) nueva.setVencimiento2(LocalDate.parse(lineSplit[7]));
-                if(lineSplit.length > 8) nueva.setImporte1(new BigDecimal(lineSplit[8]));
-                if(lineSplit.length > 9) nueva.setImporte2(new BigDecimal(lineSplit[9]));
-                if(lineSplit.length > 10) nueva.setServicio(lineSplit[10]);
-                if(lineSplit.length > 11) nueva.setTarifa(lineSplit[11]);
-                if(lineSplit.length > 12) nueva.setArchivopdf(lineSplit[12]);
-                if(lineSplit.length > 13) nueva.setEstado(lineSplit[13]);
-                if(lineSplit.length > 15) nueva.setDni(lineSplit[15]);
-                if(lineSplit.length > 16) nueva.setSocio(lineSplit[16]);
-                nueva.setArchivoFacturas(archivo);
-                fR.save(nueva);
-                } catch(Exception e) {
-                    e.printStackTrace();
+                 /*   Factura existe = fR.findByNumero(lineSplit[5]);
+                    if(existe == null) {*/
+                    
+                        nueva = new Factura();
+                        if(lineSplit.length > 1) nueva.setSuministro(lineSplit[1]);
+                        if(lineSplit.length > 2) nueva.setUsuario(lineSplit[2]);
+                        if(lineSplit.length > 3) nueva.setInmueble(lineSplit[3]);
+                        if(lineSplit.length > 4) nueva.setPeriodo(lineSplit[4]);
+                        if(lineSplit.length > 5) nueva.setNumero(lineSplit[5]);
+                        if(lineSplit.length > 6) nueva.setVencimiento1(LocalDate.parse(lineSplit[6]));
+                        if(lineSplit.length > 7) nueva.setVencimiento2(LocalDate.parse(lineSplit[7]));
+                        if(lineSplit.length > 8) nueva.setImporte1(new BigDecimal(lineSplit[8]));
+                        if(lineSplit.length > 9) nueva.setImporte2(new BigDecimal(lineSplit[9]));
+                        if(lineSplit.length > 10) nueva.setServicio(lineSplit[10]);
+                        if(lineSplit.length > 11) nueva.setTarifa(lineSplit[11]);
+                        if(lineSplit.length > 12) nueva.setArchivopdf(lineSplit[12]);
+                        if(lineSplit.length > 13) nueva.setEstado(lineSplit[13]);
+                        if(lineSplit.length > 15) nueva.setDni(lineSplit[15]);
+                        if(lineSplit.length > 16) nueva.setSocio(lineSplit[16]);
+                        nueva.setArchivoFacturas(archivo);
+                        fR.save(nueva);
+                   /* }
+                    else {
+                      log.debug("Ya existe " + lineSplit[5]);   
+                    }*/
                 }
+                catch(Exception e) {
+                 /*  e.printStackTrace();*/
+                }
+                
+             
 
                 /*
                 for(String campo : lineSplit) {

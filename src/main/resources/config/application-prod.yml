@@ -36,9 +36,9 @@ spring:
     #url: jdbc:mariadb://jnf.coop:3306/jnfcoop_wp?useLegacyDatetimeCode=false&serverTimezone=UTC
     #username: jnfcoop_wp
     #password: gn03qa68tw53du68
-    url: jdbc:mariadb://localhost:3306/Oficina?useLegacyDatetimeCode=false&serverTimezone=UTC
-    username: root
-    password: mateando
+    url: jdbc:mariadb://jnf.coop:3306/dboficina?useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: dboficina
+    password: mp28jg37dn28sn51
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -59,6 +59,8 @@ spring:
     password:
   thymeleaf:
     cache: true
+  facturas:
+    path: /home/appmaster/facturas
 
 # ===================================================================
 # To enable TLS in production, generate a certificate using:
@@ -80,7 +82,7 @@ spring:
 #        ciphers: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 ,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 ,TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 ,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,TLS_DHE_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA,TLS_RSA_WITH_CAMELLIA_256_CBC_SHA,TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA,TLS_RSA_WITH_CAMELLIA_128_CBC_SHA
 # ===================================================================
 server:
-  port: 8080
+  port: 8111
   compression:
     enabled: true
     mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
